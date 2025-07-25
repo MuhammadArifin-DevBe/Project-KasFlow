@@ -28,11 +28,17 @@ class ListTransactions extends ListRecords
     {
         return [
             Actions\CreateAction::make()
-            ->color('info'),
+                ->color('info'),
             Action::make('Excel')
                 ->color('success')
                 ->icon('heroicon-o-arrow-down-tray')
                 ->action(fn() => Excel::download(new TransactionExport, 'Laporan.xlsx')),
+            Action::make('Laporan pdf')
+                ->label('Laporan PDF')
+                ->color('danger')
+                ->icon('heroicon-o-document-text')
+                ->url(fn() => route('download.tes'))
+                ->openUrlInNewTab(),
         ];
     }
 }

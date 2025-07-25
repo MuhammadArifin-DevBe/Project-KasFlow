@@ -17,7 +17,7 @@ class Transaction extends Model
     ];
 
 
-    protected $casts = [
+     protected $casts = [
         'tanggal' => 'date',
     ];
 
