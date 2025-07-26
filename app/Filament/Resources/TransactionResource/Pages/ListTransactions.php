@@ -37,7 +37,7 @@ class ListTransactions extends ListRecords
                 ->label('Laporan PDF')
                 ->color('danger')
                 ->icon('heroicon-o-document-text')
-                ->url(fn() => route('download.tes'))
+                ->url(fn() => route('download.pdf'))
                 ->openUrlInNewTab(),
         ];
     }
