@@ -38,6 +38,15 @@ class CashReportResource extends Resource
                         TextInput::make('keterangan')->required(),
                         TextInput::make('kas_masuk')->numeric()->default(0),
                         TextInput::make('kas_keluar')->numeric()->default(0),
+                        FileUpload::make('bukti')
+                            ->label('Upload Kwitansi')
+                            ->disk('public')
+                            ->directory('kwitansi')
+                            ->downloadable()
+                            ->openable()
+                            ->previewable()
+                            ->preserveFilenames()
+                            ->visibleOn('edit'),
                     ])
                     ->columns(2),
             ]);
@@ -50,6 +59,17 @@ class CashReportResource extends Resource
                 TextColumn::make('keterangan')->sortable()->searchable(),
                 TextColumn::make('kas_masuk')->sortable()->searchable(),
                 TextColumn::make('kas_keluar')->sortable()->searchable(),
+                TextColumn::make('bukti')
+                    ->label('Status Kwitansi')
+                    ->formatStateUsing(fn($state) => $state ? 'Kwitansi Terlampir' : 'Kwitansi Belum Terlampir')
+                    ->color(fn($state) => $state ? 'success' : 'danger')
+                    ->url(fn($record) => $record->bukti ? asset('storage/' . $record->bukti) : null, true)
+                    ->openUrlInNewTab()
+                    ->badge()
+                    ->extraAttributes(fn($record) => [
+                        'style' => $record->bukti ? 'cursor: pointer; text-decoration: underline;' : 'cursor: not-allowed;',
+                    ])
+
                 // TextColumn::make('bukti')
                 //     ->label('Kwitansi')
                 //     ->formatStateUsing(fn($state) => $state ? 'Download' : '-')
@@ -61,11 +81,11 @@ class CashReportResource extends Resource
             ])
             ->actions([
                 Action::make('download')
-                ->label('Download')
-                ->color('info')
-                ->icon('heroicon-o-arrow-down-tray')
-                ->url(fn($record) => route('kwitansi.download', $record->id))
-                ->openUrlInNewTab(false),
+                    ->label('Download')
+                    ->color('info')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->url(fn($record) => route('kwitansi.download', $record->id))
+                    ->openUrlInNewTab(false),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
