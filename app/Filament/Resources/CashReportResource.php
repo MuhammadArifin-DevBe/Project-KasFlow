@@ -57,8 +57,8 @@ class CashReportResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('keterangan')->sortable()->searchable(),
-                TextColumn::make('kas_masuk')->sortable()->searchable(),
-                TextColumn::make('kas_keluar')->sortable()->searchable(),
+                TextColumn::make('kas_masuk')->sortable()->searchable()->formatStateUsing(fn ($state) => 'Rp ' . number_format($state, 0, ',', '.')),
+                TextColumn::make('kas_keluar')->sortable()->searchable()->formatStateUsing(fn ($state) => 'Rp ' . number_format($state, 0, ',', '.')),
                 TextColumn::make('bukti')
                     ->label('Status Kwitansi')
                     ->formatStateUsing(fn($state) => $state ? 'Kwitansi Terlampir' : 'Kwitansi Belum Terlampir')

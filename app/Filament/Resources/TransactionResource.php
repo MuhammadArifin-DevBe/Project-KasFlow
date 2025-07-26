@@ -50,7 +50,7 @@ class TransactionResource extends Resource
                 TextColumn::make('keterangan')->sortable()->searchable(),
                 TextColumn::make('satuan')->sortable()->searchable(),
                 TextColumn::make('jenis_transaksi')->sortable()->searchable(),
-                TextColumn::make('jumlah')->label('Jumlah')->money('IDR')->sortable()->searchable()
+                TextColumn::make('jumlah')->label('Jumlah')->sortable()->searchable()->formatStateUsing(fn ($state) => 'Rp ' . number_format($state, 0, ',', '.'))
                     // ->summarize(Sum::make()->label('Total')),
             ])
             ->filters([

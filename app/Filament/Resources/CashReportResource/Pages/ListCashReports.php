@@ -2,11 +2,12 @@
 
 namespace App\Filament\Resources\CashReportResource\Pages;
 
-use App\Filament\Resources\CashReportResource;
 use Filament\Actions;
+use Filament\Actions\Action;
+use Maatwebsite\Excel\Facades\Excel;
 use Filament\Resources\Pages\ListRecords;
-
-
+use App\Filament\Resources\CashReportResource;
+use App\Models\CashReport;
 
 class ListCashReports extends ListRecords
 {
@@ -16,6 +17,16 @@ class ListCashReports extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+             Action::make('Excel')
+                ->color('success')
+                ->icon('heroicon-o-arrow-down-tray')
+                ->action(fn() => Excel::download(new Ca(), 'ArusKas.xlsx')),
+                Action::make('ArusKas pdf')
+                ->label('ArusKas PDF')
+                ->color('danger')
+                ->icon('heroicon-o-document-text')
+                ->url(fn() => route('aruskas.pdf'))
+                ->openUrlInNewTab(),
         ];
     }
 }

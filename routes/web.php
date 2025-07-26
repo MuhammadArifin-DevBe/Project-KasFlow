@@ -4,6 +4,7 @@ use App\Models\CashReport;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\CashReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('download', [PDFController::class, 'downloadpdf'])->name('download.pdf');
+Route::get('download', [PDFController::class, 'downloadpdf'])->name('transaction.pdf');
+Route::get('/download-arus-kas', [CashReportController::class, 'downloadpdf'])->name('aruskas.pdf');
 Route::get('/download-kwitansi/{id}', function ($id) {
     $cash = CashReport::findOrFail($id);
 

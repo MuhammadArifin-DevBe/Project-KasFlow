@@ -45,7 +45,7 @@
             @foreach ($transactions as $i => $trx)
             <tr>
                 <td>{{ $i + 1 }}</td>
-                <td>{{ $trx->tanggal->format('d-m-Y') }}</td>
+                <td>{{ optional($trx->tanggal)->format('d-m-Y') }}</td>
                 <td>{{ $trx->keterangan }}</td>
                 <td>{{ $trx->satuan ?? '-' }}</td>
                 <td>{{ ucfirst($trx->jenis_transaksi) }}</td>
